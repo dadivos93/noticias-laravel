@@ -16,36 +16,20 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('usuarios', function()
-{
-    return "Hola Mundo";
+// Esto debe estar antes de la ruta a detectar
+Route::pattern('nombre','[a-z-A-Z]+');
+Route::pattern('edad','[0-9]+');
+
+Route::get('profesores/{nombre}/{edad}', function($nombre, $edad) {
+    return "Hola " . $nombre . " tu edad es " . $edad;
 });
 
-Route::post('usuarios', function()
-{
-    return View::make('hello');
+// Reescribiendo validación
+Route::pattern('edad','[0-9-a-z]+');
+Route::get('estudiantes/{nombre}/{edad}', function($nombre, $edad) {
+    return "Hola " . $nombre . " tu edad es " . $edad;
 });
 
-Route::get('usuario/{nombre?}/{edad?}', function($nombre=null, $edad=null)
-{
-    if(!$nombre) {
-        return "Hola Mundo";
-    } else {
-        return "Hola " . $nombre . " tu edad es " . $edad;
-    }
-});
-
-Route::match(array('GET', 'POST'), '/', function()
-{
-    return 'Hello World';
-});
-
-Route::any('foo', function()
-{
-    return 'Hello World';
-});
-
-Route::get('foo', array('https', function()
-{
-    return 'Must be over HTTPS';
-}));
+/*Route::get('profesores/{nombre}/{edad}', function($nombre, $edad) {
+    return "Hola " . $nombre . " tu edad es " . $edad;
+})->where(array('nombre'=>'[a-z-A-Z]+', 'edad'=>'[0-9]+'));*/

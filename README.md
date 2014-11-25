@@ -4,3 +4,4 @@
 * Crear la base de datos y el archivo de configuración.
 * Migrate para el manejo de base de datos.
 * Route componente de trabajo de rutas.
+* Route II - Detectando el tipo de dato de las variables
