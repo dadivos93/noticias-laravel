@@ -20,16 +20,38 @@ Route::get('/', function()
 Route::pattern('nombre','[a-z-A-Z]+');
 Route::pattern('edad','[0-9]+');
 
-Route::get('profesores/{nombre}/{edad}', function($nombre, $edad) {
-    return "Hola " . $nombre . " tu edad es " . $edad;
+// Creando un grupo de rutas dode se le aplica un filtro de sessión antes de acceder
+Route::group(array('before'=>'session'), function() {
+    Route::get('profesores/{nombre}/{edad}', function($nombre, $edad) {
+        return "Hola {$nombre} tu edad es {$edad}";
+    });
+
+    // Reescribiendo validación
+    Route::pattern('edad','[0-9-a-z]+');
+    Route::get('estudiantes/{nombre}/{edad}', function($nombre, $edad) {
+        return "Hola " . $nombre . " tu edad es " . $edad;
+    });
 });
 
-// Reescribiendo validación
-Route::pattern('edad','[0-9-a-z]+');
-Route::get('estudiantes/{nombre}/{edad}', function($nombre, $edad) {
+
+// Validando la sesion antes de entrar en la ruta
+/*Route::pattern('edad','[0-9-a-z]+');
+Route::get('estudiantes/{nombre}/{edad}', array('before'=>'session' ,function($nombre, $edad) {
     return "Hola " . $nombre . " tu edad es " . $edad;
-});
+}));*/
 
 /*Route::get('profesores/{nombre}/{edad}', function($nombre, $edad) {
     return "Hola " . $nombre . " tu edad es " . $edad;
 })->where(array('nombre'=>'[a-z-A-Z]+', 'edad'=>'[0-9]+'));*/
+
+// Crear una variable de sesion
+Route::get('session/crear', function() {
+    Session::put('nombre', 'David');
+    return 'Se creó la sesión correctamente';
+});
+
+// 
+Route::get('/session/eliminar', function() {
+    Session::forget('nombre');
+    return 'El campo nombre fue eliminado de la sesion actual';
+});

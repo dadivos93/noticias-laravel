@@ -5,3 +5,4 @@
 * Migrate para el manejo de base de datos.
 * Route componente de trabajo de rutas.
 * Route II - Detectando el tipo de dato de las variables
+* Route - Filtros y grupos de rutas
